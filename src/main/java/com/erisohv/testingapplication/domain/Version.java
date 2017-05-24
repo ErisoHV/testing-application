@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="version", uniqueConstraints={@UniqueConstraint(columnNames={"name", "application_id"})})
 public class Version {
@@ -26,6 +28,7 @@ public class Version {
 	@ManyToOne
 	private Application application;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="version")
 	private Set<TestCycle> testCycle;
 	

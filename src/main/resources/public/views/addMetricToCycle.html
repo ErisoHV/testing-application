@@ -1,0 +1,94 @@
+<form id="cycleForm">
+ 
+  <div class="form-group row">
+    <label for="apps">Aplicaci&oacute;n * </label>
+    <select class="form-control" id="apps" aria-describedby="appHelp">
+      <option></option>
+    </select>
+    <small id="appHelp" class="form-text text-muted">Seleccione una aplicaci&oacute;n para ver sus versiones</small>
+  </div>
+  
+  <div class="form-group row">
+    <label for="version">Versi&oacute;n * </label>
+    <select class="form-control" id="version" aria-describedby="versionHelp">
+      <option></option>
+    </select>
+    <small id="versionHelp" class="form-text text-muted">Versi&oacute;n atada al ciclo de pruebas</small>
+  </div>
+  
+  <div class="form-group row">
+    <label for="cycle">Ciclo de prueba * </label>
+    <select class="form-control" id="cycle" aria-describedby="cycleHelp">
+      <option></option>
+    </select>
+    <small id="cycleHelp" class="form-text text-muted"></small>
+  </div>
+  
+  <fieldset class="form-group row">
+  	<legend class="col-form-legend col-sm-2">Resultado de la M&eacute;trica</legend>
+  	<div class="col-sm-10">
+  		<div class="form-group">
+		    <label for="metric">M&eacute;trica * </label>
+		    <select class="form-control" id="metric" aria-describedby="metricHelp">
+		      <option></option>
+		    </select>
+		    <small id="metricHelp" class="form-text text-muted">Seleccione una m&eacute;trica para registrar sus 
+		    	resultados en un ciclo de prueba<br/> Puede registrar otras m&eacute;tricas en la opci&oacute;n:  
+		    		M&eacute;tricas > Crear m&eacute;trica</small>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="result">Resultado * </label>
+		    <input type="number" class="form-control" id="result" aria-describedby="resultHelp" placeholder="Resultado">
+		    <small id="resultHelp" class="form-text text-muted"></small>
+		  </div>
+  	</div>
+  </fieldset>
+  
+    
+  
+  
+  <button type="submit" class="btn btn-primary" id="submit">Registrar resultado de m&eacute;trica</button>
+</form>
+
+<script>
+
+$(document).ready(function(){
+	 getService("http://localhost:8080/application", function(data){loadSelectionList(data,"#apps", "application")}, null);
+	 
+	 getService("http://localhost:8080/metric", function(data){loadSelectionList(data,"#metric", "metric")}, null);
+	 
+	 getService("http://localhost:8080/testcycle", function(data){loadSelectionList(data,"#cycle", "testcycle")}, null);
+	 
+	 $("#apps").change(function(){
+		 loadSelectionListOnChange("http://localhost:8080/application/", "#apps", "#version", "versions", "version");
+	 })
+	 
+	 $("#version").change(function(){
+		 loadSelectionListOnChange("http://localhost:8080/version/", "#version", "#cycle", "testCycle","testcycle");
+	 })
+	 
+	 $("#submit").click(function(event){
+			if (!validateFormFieldsEmpty(["name", "apps", "version", "cycle", "metric", "result"]))
+				return;
+			
+			var data = {testcycle: "/testcycle/" + $("#cycle").val(), metric: "/metric/"+ $("#metric").val(),
+						measure: $("#result").val()};
+		    event.preventDefault();
+
+		    processForm(data, "http://localhost:8080/metricresult", "POST", addSuccess, addError);
+		});
+	
+})
+
+function addSuccess(){
+	$("#cycleForm")[0].reset();
+	showAlert("El ciclo de pruebas ha sido guardado con &eacute;xito", "success");
+}
+
+function addError(){
+	showAlert("Error al guardar el ciclo de pruebas, verifique si ya existe ese nombre para la versi&oacute;n seleccionada",
+			"danger");
+}
+
+</script>

@@ -1,0 +1,43 @@
+<form id="verForm">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nombre de la versi&oacute;n * </label>
+    <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Nombre">
+  </div>
+
+  <div class="form-group">
+    <label for="apps">Aplicaci&oacute;n * </label>
+    <select class="form-control" id="apps" aria-describedby="versionHelp">
+      <option></option>
+    </select>
+    <small id="versionHelp" class="form-text text-muted">Seleccione la aplicaci&oacute;n a 
+    	la que pertenece esta versión</small>
+  </div>
+  
+  <button type="submit" class="btn btn-primary" id="submit">Crear versi&oacute;n</button>
+</form>
+
+<script>
+  $(document).ready(function(){
+	  getService("http://localhost:8080/application", function(data){loadSelectionList(data,"#apps", "application")}, 
+			 null);
+	  
+	  $("#submit").click(function(event){
+		  if (!validateFormFieldsEmpty(["name", "apps"]))
+				return;
+
+			var data = {name: $("#name").val(), application: "/application/" + $("#apps").val()};
+		    event.preventDefault();
+		    processForm(data, "http://localhost:8080/version/", "POST", addSuccess, addError);
+		});
+  });
+  
+  function addSuccess(){
+		$("#verForm")[0].reset();
+		showAlert("La Versi&oacute;n ha sido guardada con exito", "success");
+	}
+
+	function addError(){
+		showAlert("Error al guardar la Versi&oacute;n, verifique si ya existe ese nombre", "danger");
+	}
+</script>
+

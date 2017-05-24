@@ -10,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="testcycle")
+@Table(name="testcycle", uniqueConstraints={@UniqueConstraint(columnNames={"name", "version_id"})})
 public class TestCycle {
 
 	@Id

@@ -1,0 +1,35 @@
+<form id="appForm">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nombre de la aplicaci&oacute;n * </label>
+    <input id="name" type="text" class="form-control" id="appName" aria-describedby="nameHelp" placeholder="Nombre">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleTextarea">Descripci&oacute;n</label>
+    <textarea class="form-control" id="description" rows="3"></textarea>
+  </div>
+  
+  <button type="submit" class="btn btn-primary" id="submit">Crear aplicaci&oacute;n</button>
+</form>
+
+<script>
+
+$("#submit").click(function(event){
+	if (!validateFormFieldsEmpty(["name"]))
+		return;
+		
+	var data = {name: $("#name").val(), description: $("#description").val()};
+    event.preventDefault();
+    processForm(data, "http://localhost:8080/application/", "POST", addSuccess, addError);
+});
+
+function addSuccess(){
+	$("#appForm")[0].reset();
+	showAlert("La Aplicaci&oacute;n ha sido guardada con exito", "success");
+}
+
+function addError(){
+	showAlert("Error al guardar la Aplicaci&oacute;n, verifique si ya existe ese nombre", "danger");
+}
+
+</script>

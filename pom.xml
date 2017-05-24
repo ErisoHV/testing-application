@@ -5,18 +5,18 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>testingapplication</name>
   
+  	<properties>
+	    <java.version>1.8</java.version>
+	    <maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+  
   <parent>
 	  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
 	    <version>1.5.1.RELEASE</version>
-  </parent>
-  
-  <properties>
-       <gwt.version>2.7.0</gwt.version>
-       <smartgwt.version>5.0-p20150526</smartgwt.version>
-   </properties>
-  
+  </parent> 
+    
   <build>
         <plugins>
             <plugin>
@@ -60,6 +60,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
                 
     </dependencies>
 

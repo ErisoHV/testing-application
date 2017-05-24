@@ -9,9 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="metricresult")
+@Table(name="metricresult", uniqueConstraints={@UniqueConstraint(columnNames={"testcycle_id", "metric_id"})})
 public class MetricResult {
 	
 	@Id
@@ -47,11 +48,11 @@ public class MetricResult {
 		this.measure = measure;
 	}
 
-	public TestCycle getTestCycle() {
+	public TestCycle getTestcycle() {
 		return testcycle;
 	}
 
-	public void setTestCycle(TestCycle testCycle) {
+	public void setTestcycle(TestCycle testCycle) {
 		this.testcycle = testCycle;
 	}
 

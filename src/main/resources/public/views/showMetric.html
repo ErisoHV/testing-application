@@ -1,0 +1,112 @@
+<table class="table table-hover table-striped" id="metric">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripci&oacute;n</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Versiones</h4>
+	      </div>
+	      <div class="modal-body">
+	        	<table class="table table-hover table-striped" id="versions">
+				    <thead>
+				      <tr>
+				        <th>Nombre</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				    </tbody>
+				 </table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+  
+  <script>
+  var appName = "";
+  $(document).ready(function(){
+	  getService("http://localhost:8080/metric/", loadMetricsTable, 
+			 errorFunction);
+  });
+  
+  function loadMetricsTable(data){
+	 var table = $("#metric tbody");
+	 var tblBody = "";
+	 
+	 if(data._embedded != null)
+		  	applications = data._embedded.metric;
+	 
+	 $.each(applications, function(){
+		 var tblRow = "";
+		 var link = "";
+		 var name= "";
+	        $.each(this, function(k , v) {
+	        	if (k == "name"){
+	        		name = v;
+	        	}
+	        	/*if (k == "_links"){
+	        		link = v.versions.href;
+	        	}*/
+	        	if (k !== "_links" && k !== "id"){
+	        		tblRow += "<td>" + (v !== null ? v : "") + "</td>";
+	        	}
+	        });
+	        tblBody += "<tr>" + tblRow + "</tr>";
+	 });
+	 table.html(tblBody);
+	 initButtonTableElements();
+
+  }
+  
+  function initButtonTableElements(){
+	$(".open-version").click(function(){
+		appName = $(this).attr("data-name");
+		console.log(appName)
+		getService($(this).attr('data-link'), loadVersionsTable, 
+				 errorFunction);
+	});
+  }
+  
+  function loadVersionsTable(data){
+	  var table = $("#versions tbody");
+		 var tblBody = "";
+		 
+		 var versions;
+		 if(data._embedded != null)
+			 versions = data._embedded.version;
+		 
+		 $.each(versions, function(){
+			 var tblRow = "";
+			 var link = "";
+		        $.each(this, function(k , v) {
+		        	if (k !== "id" && k !== "application" && k !== "_links"){
+		        		tblRow += "<td>" + (v !== null ? v : "") + "</td>";
+		        	}
+		        });
+		        tblBody += "<tr>" + tblRow + "</tr>";
+		 });
+		 table.html(tblBody);
+		 $("#myModal .modal-title").html("Versiones de la Aplicaci&oacute;n: " + appName);
+		 $('#myModal').modal('show');
+  }
+ 
+  function errorFunction(element){
+	  showAlert("Error al recuperar los datos", "danger")
+  }
+  
+  </script>

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Software application entity definition
  * @author Erika
@@ -27,6 +29,7 @@ public class Application {
 	@Column(nullable=true)
 	private String description;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="application")
 	private Set<Version> versions;
 

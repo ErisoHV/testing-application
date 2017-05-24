@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Testing Application</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Testing Application</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Inicio</a></li>
+      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Aplicaciones
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="addApp" class="option-menu">Crear Aplicaci&oacute;n</a></li>
+          <li><a href="#" id="addVer" class="option-menu">Crear Versi&oacute;n</a></li>
+          <li><a href="#" id="showApp" class="option-menu">Ver Aplicaciones</a></li>
+        </ul>
+      </li>
+      
+       <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ciclos de Pruebas
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="addCycle" class="option-menu">Crear Ciclo de Prueba</a></li>
+          <li><a href="#" id="addMetricToCycle" class="option-menu">Registrar resultados</a></li>
+          <li><a href="#" id="showCycleMetrics" class="option-menu">Ver Ciclos de Pruebas</a></li>
+        </ul>
+      </li>
+      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">M&eacute;tricas
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="addMetric" class="option-menu">Crear m&eacute;trica</a></li>
+          <li><a href="#" id="showMetric" class="option-menu">Ver m&eacute;tricas</a></li>
+        </ul>
+      </li>
+
+    </ul>
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12"><h3 class="app-name">Testing Application</h3></div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-8 col-sm-12" id="view-load"></div>
+	</div>
+	
+</div>
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Notify -->
+<script src="js/bootstrap-notify.min.js"></script>
+
+<script src="js/testingapp.js"></script>
+<script src="js/services.js"></script>
+
+</body>
+</html>

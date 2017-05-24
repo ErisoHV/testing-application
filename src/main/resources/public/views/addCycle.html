@@ -1,0 +1,58 @@
+<form id="cycleForm">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nombre del Ciclo* </label>
+    <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Nombre">
+  </div>
+
+  <div class="form-group">
+    <label for="apps">Aplicaci&oacute;n * </label>
+    <select class="form-control" id="apps" aria-describedby="appHelp">
+      <option></option>
+    </select>
+    <small id="appHelp" class="form-text text-muted">Seleccione una aplicaci&oacute;n para ver sus versiones</small>
+  </div>
+  
+  <div class="form-group">
+    <label for="version">Versi&oacute;n * </label>
+    <select class="form-control" id="version" aria-describedby="versionHelp">
+      <option></option>
+    </select>
+    <small id="versionHelp" class="form-text text-muted">Versi&oacute;n atada al ciclo de pruebas</small>
+  </div>
+  
+  <button type="submit" class="btn btn-primary" id="submit">Crear versi&oacute;n</button>
+</form>
+
+<script>
+
+$(document).ready(function(){
+	 getService("http://localhost:8080/application", function(data){loadSelectionList(data,"#apps", "application")}, null);
+	 
+	 $("#apps").change(function(){
+		 $("#version").children().remove();
+		 $('select').append('<option></option>');
+		 loadSelectionListFromSelection("http://localhost:8080/application/", "#apps", "#version", "versions", "version");
+	 })
+	 
+	 $("#submit").click(function(event){
+			if (!validateFormFieldsEmpty(["name", "apps", "version"]))
+				return;
+				
+			var data = {name: $("#name").val(), version: "/version/"+ $("#version").val()};
+		    event.preventDefault();
+		    processForm(data, "http://localhost:8080/testcycle", "POST", addSuccess, addError);
+		});
+	
+})
+
+function addSuccess(){
+	$("#cycleForm")[0].reset();
+	showAlert("El ciclo de pruebas ha sido guardado con &eacute;xito", "success");
+}
+
+function addError(){
+	showAlert("Error al guardar el ciclo de pruebas, verifique si ya existe ese nombre para la versi&oacute;n seleccionada",
+			"danger");
+}
+
+</script>
