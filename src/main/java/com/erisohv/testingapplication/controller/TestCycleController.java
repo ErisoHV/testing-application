@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.erisohv.testingapplication.domain.TestCycle;
 import com.erisohv.testingapplication.repository.TestCycleRepository;
+import com.erisohv.testingapplication.repository.VersionRepository;
 
 @RestController
 @RequestMapping("/testcycle/api")
@@ -22,6 +23,9 @@ public class TestCycleController {
 
 	@Autowired
 	private TestCycleRepository testCycleRepository;
+	
+	@Autowired
+	private VersionRepository versionRepository;
 	
 	@GetMapping(value = "/listInfo", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<Map<String, String>>> getListInfo(){
